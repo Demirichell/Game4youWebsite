@@ -1,5 +1,8 @@
 import { Avatar } from "@material-tailwind/react";
 import avatar from "../../assets/Images/avatar.png";
+import hearticon from "../../assets/Images/hearticon.png";
+import controllericon from "../../assets/Images/controllericon.png";
+import addimg from "../../assets/Images/addimg.png";
 import { Button } from "@material-tailwind/react";
 
 const Main = () => {
@@ -19,6 +22,7 @@ const Main = () => {
                 <input
                   type="text"
                   name="text"
+                  placeholder="Whats on your mind?"
                   className="outline-none w-full bg-white rounded-md"
                 />
               </div>
@@ -34,23 +38,30 @@ const Main = () => {
         <span>{/* TO:DO progressBar*/}</span>
         <div className="flex justify-around items-center pt-4">
           <div className="flex items-center">
-            {/* TO:DO addImage button for upload*/}
+            <label
+              htmlFor="addimg"
+              className=" cursor-pointer flex items-center"
+            >
+              <img className="h-10 mb-3 mr-2" src={addimg} alt="add" />
+              <input id="addimg" type="file" style={{ display: "none" }} />
+            </label>
           </div>
           <div className="flex items-center">
-            <img src="" alt="live" />
+            <img className="h-10 mb-3 mr-2" src={controllericon} alt="live" />
             <p className="font-medium text-md text-gray-700 no-underline tracking-normal leading-none">
-              {" "}
               live
             </p>
           </div>
           <div className="flex items-center">
-            <img src="" alt="feeling" />
+            <img className="h-10 mb-3 mr-2" src={hearticon} alt="feeling" />
             <p className="font-medium text-md text-gray-700 no-underline tracking-normal leading-none">
               Feeling
             </p>
           </div>
         </div>
       </div>
+      <div className="flex flex-col py-4 w-full">{/*posts */}</div>
+      <div> {/* reffernce for later */} </div>
     </div>
   );
 };

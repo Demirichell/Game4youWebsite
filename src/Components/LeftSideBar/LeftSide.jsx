@@ -14,7 +14,7 @@ const LeftSide = () => {
       <div className="flex flex-col items-center relative">
         <img className="h-28 w-full rounded-r" src={game1} alt="game" />
         <div className="absolute -bottom-4 ">
-          <Tooltip content="Profile" placement="topj">
+          <Tooltip content="Profile" placement="top">
             <Avatar src={avatar} size="xs" alt="Avatar"></Avatar>
           </Tooltip>
         </div>

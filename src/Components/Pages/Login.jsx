@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Card,
     CardHeader,
@@ -11,9 +11,12 @@ import {
   import { Link } from "react-router-dom";
   import {useFormik} from "formik";
   import * as Yup from "yup";
-
+  import FadeLoader from "react-spinners/FadeLoader";
 
 const Login = () => {
+
+    const[loading, setLoading] = useState(false);
+
     let initialValues = {
         email: "",
         password: "",
@@ -34,15 +37,21 @@ const Login = () => {
         e.preventDefault();
         const {email,password } = formik.values;
         if(formik.isValid === true){
-            alert("valid")
+            alert("valid");
+            setLoading(true);
         } else {
-            alert("Invalid input")
+            alert("Invalid input");
         }
         console.log("formik", formik);
     }
     const formik = useFormik({initialValues, validationSchema, handleSubmit});
 
     return (
+        <>
+        {loading ? (
+        <div className="grid grid-cols-1 justify-items-center items-center h-screen">
+            <FadeLoader color="#3763ff" />
+        </div> ) : (
         <div className="grid grid-cols-1 h-screen justify-items-center items-center">
         <Card className="w-96">
         <CardHeader
@@ -59,11 +68,17 @@ const Login = () => {
                 <div className="mb-2">
                     <Input name="email" type="email" label="Email" size="lg" {...formik.getFieldProps("email")}/>
                 </div>
-                {formik.touched.email && formik.errors.email &&(<Typography variant="small" color="red">{formik.errors.email}</Typography>)}
+                {formik.touched.email && formik.errors.email && (
+                    <Typography variant="small" color="red">
+                        {formik.errors.email}
+                    </Typography>)}
                 <div className="mt-4 mb-2"> 
                     <Input name="password" type="password" label="Password" size="lg" {...formik.getFieldProps("password")}/> 
                 </div>  
-                {formik.touched.password && formik.errors.password &&(<Typography variant="small" color="red">{formik.errors.password}</Typography>)}       
+                {formik.touched.password && formik.errors.password && (
+                    <Typography variant="small" color="red">
+                        {formik.errors.password}
+                    </Typography>)}       
                 <Button variant="gradient" color="blue" fullWidth className="mb-4" type="submit">
                 Sign in
                 </Button>
@@ -72,13 +87,8 @@ const Login = () => {
             Sign in with Google
           </Button>
           </CardBody>
-          <CardFooter className="pt-0">
-          <Link to="/reset">
-          <p className="ml-1 font-bold font-roboto text-sm text-blue-500 text-center">
-            Reset password
-            </p>
-            </Link>
-            <div className="mt-6 flex font-roboto text-base justify-center">
+          <CardFooter className="pt-0">          
+            <div className="flex font-roboto text-base justify-center">
               <Link to="../register">
                 <p className="ml-1 font-bold font-roboto text-sm text-blue-500 text-center">
                     Register
@@ -88,6 +98,8 @@ const Login = () => {
         </CardFooter>
       </Card>
       </div>
+      )}
+      </>
     );
 }
 

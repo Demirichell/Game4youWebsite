@@ -1,3 +1,4 @@
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { Tooltip } from "@material-tailwind/react";
 import { Avatar } from "@material-tailwind/react";
 import game1 from "../../assets/Images/game1.png";
@@ -7,8 +8,11 @@ import gamingcontroller from "../../assets/Images/gamingcontroller.png";
 import avatar from "../../assets/Images/avatar.png";
 import discordlogo from "../../assets/Images/discordlogo.png";
 import instagramlogo from "../../assets/Images/instagramlogo.png";
+import { AuthContext } from "../AppContext/AppContext";
 
 const LeftSide = () => {
+  const { user, userData } = useContext(AuthContext);
+
   return (
     <div className="flex flex-col h-screen bg-white pb-4 border-2 rounden-r-xl shadow-lg">
       <div className="flex flex-col items-center relative">
@@ -21,7 +25,7 @@ const LeftSide = () => {
       </div>
       <div className="flex flex-col items-center pt-6">
         <p className="font-medium text-md text-gray-600 no-underline tracking-normal leading-none">
-          User email
+          {user?.email || userData?.email}
         </p>
         <p className="font-medium text-xs text-gray-600 no-underline tracking-normal leading-none">
           Access exclusive tools & insight

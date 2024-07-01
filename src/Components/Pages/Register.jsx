@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect} from "react";
 import {
     Card,
     CardHeader,
@@ -8,35 +8,45 @@ import {
     Input,
     Button,
   } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import FadeLoader from "react-spinners/FadeLoader";
+import { AuthContext } from "../AppContext/AppContext";
+import { auth, onAuthStateChanged} from "../firebase/firebase";
 
 const Register = () => {
-
     const[loading, setLoading] = useState(false);
+    const { registerWithEmailAndPassword } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      setLoading(true);
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          navigate("/");
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
+      });
+    }, [navigate]);
 
     let initialValues = {
         name: "",
         email: "",
-        username: "",
         password: "",
     };
 
     const validationSchema = Yup.object({
-        displayname: Yup.string().
+        name: Yup.string().
         required('Required')
-        .min("2", "Display name must be at least 2 characters")
-        .max("24", "Display name must be 24 characters or less"),
+        .min("2", "Name must be at least 2 characters")
+        .max("24", "Name must be 24 characters or less"),
         email: Yup.string()
         .email("Invalid email address")
         .required("Required")
         .max("64", "Password must be 64 characters or less"),
-        username: Yup.string()
-        .required('Required')
-        .min("6", "Username must be at least 6 characters")
-        .max("16", "Username must be 16 characters or less"),
         password: Yup.string()
         .required("Required")
         .min("8", "Password must be at least 8 characters")
@@ -44,11 +54,12 @@ const Register = () => {
 
     const handleRegister = (e) => {
         e.preventDefault();
-        const { displayname, email, username, password } = formik.values;
+        const { name, email, password } = formik.values;
         if (formik.isValid === true){
-            alert("valid");
+            registerWithEmailAndPassword(name, email, password);
             setLoading(true);
         } else {
+            setLoading(false);
             alert("Invalid input");
         }
      
@@ -76,11 +87,11 @@ const Register = () => {
           <CardBody className="flex flex-col gap-4">
             <form onSubmit={handleRegister}>
                 <div className="mb-2">
-                    <Input name="displayname" type="text" label="Display name" size="lg" {...formik.getFieldProps("displayname")} />
+                    <Input name="name" type="text" label="Name" size="lg" {...formik.getFieldProps("name")} />
                 </div>
-                    {formik.touched.displayname && formik.errors.displayname && (
+                    {formik.touched.name && formik.errors.name && (
                         <Typography variant="small" color="red">
-                            {formik.errors.displayname}
+                            {formik.errors.name}
                         </Typography>
                     )}            
                 <div className="mt-4 mb-2">
@@ -89,14 +100,6 @@ const Register = () => {
                 {   formik.touched.email && formik.errors.email && (
                         <Typography variant="small" color="red">
                             {formik.errors.email}
-                        </Typography>
-                    )}
-                <div className="mt-4 mb-2">
-                    <Input name="username" type="text" label="Username" size="lg" {...formik.getFieldProps("username")} />
-                </div>
-                    {formik.touched.username && formik.errors.username && (
-                        <Typography variant="small" color="red">
-                            {formik.errors.username}
                         </Typography>
                     )}
                 <div className="mt-4 mb-2">

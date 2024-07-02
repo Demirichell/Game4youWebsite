@@ -1,8 +1,7 @@
 import { Avatar } from "@material-tailwind/react";
 import PostCard from "./PostCard";
 import avatar from "../../assets/Images/avatar.png";
-import hearticon from "../../assets/Images/hearticon.png";
-import controllericon from "../../assets/Images/controllericon.png";
+
 import addimg from "../../assets/Images/addimg.png";
 import { Button } from "@material-tailwind/react";
 import { useRef, useState, useContext, useReducer, useEffect } from "react";

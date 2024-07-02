@@ -1,6 +1,6 @@
 import { cardData } from "../../assets/CardData";
 import Card from "./Card";
-const CardSection = () => {
+const CardSection = ({ postId }) => {
   return (
     <div>
       <div>

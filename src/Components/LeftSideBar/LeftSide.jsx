@@ -3,8 +3,6 @@ import { Tooltip } from "@material-tailwind/react";
 import { Avatar } from "@material-tailwind/react";
 import game1 from "../../assets/Images/game1.png";
 
-import location from "../../assets/Images/location.png";
-import gamingcontroller from "../../assets/Images/gamingcontroller.png";
 import avatar from "../../assets/Images/avatar.png";
 import discordlogo from "../../assets/Images/discordlogo.png";
 import instagramlogo from "../../assets/Images/instagramlogo.png";

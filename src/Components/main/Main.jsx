@@ -21,7 +21,7 @@ import { db } from "../firebase/firebase";
 import {
   PostsReducer,
   postActions,
-  postsStates,
+  postStates,
 } from "../AppContext/PostReducer";
 import {
   getStorage,
@@ -38,7 +38,7 @@ const Main = () => {
   const collectionRef = collection(db, "posts");
   const postRef = doc(collection(db, "posts"));
   const document = postRef.id;
-  const [state, dispatch] = useReducer(PostsReducer, postsStates);
+  const [state, dispatch] = useReducer(PostsReducer, postStates);
   const { SUBMIT_POST, HANDLE_ERROR } = postActions;
   const [progressBar, setProgressBar] = useState(0);
 
@@ -196,18 +196,6 @@ const Main = () => {
               </Button>
             )}
           </div>
-          <div className="flex items-center">
-            <img className="h-10 mb-3 mr-2" src={controllericon} alt="live" />
-            <p className="font-medium text-md text-gray-700 no-underline tracking-normal leading-none">
-              live
-            </p>
-          </div>
-          <div className="flex items-center">
-            <img className="h-10 mb-3 mr-2" src={hearticon} alt="feeling" />
-            <p className="font-medium text-md text-gray-700 no-underline tracking-normal leading-none">
-              Like
-            </p>
-          </div>
         </div>
       </div>
       <div className="flex flex-col py-4 w-full">
@@ -226,8 +214,8 @@ const Main = () => {
               <PostCard
                 key={index}
                 logo={post.logo}
-                id={post.documentId}
-                uid={post.uid}
+                id={post?.documentId}
+                uid={post?.uid}
                 name={post.name}
                 email={post.email}
                 text={post.text}

@@ -27,26 +27,9 @@ const LeftSide = () => {
         <p className="font-medium text-md text-gray-600 no-underline tracking-normal leading-none">
           {user?.email || userData?.email}
         </p>
-        <p className="font-medium text-xs text-gray-600 no-underline tracking-normal leading-none">
-          Access exclusive tools & insight
-        </p>
-        <p className="font-medium text-sm text-gray-600 no-underline tracking-normal leading-none py-2">
-          Try premium for mee
-        </p>
       </div>
       <div className="flex flex-col items-center pl-2">
-        <div className="flex items-center pb-4">
-          <img className="h-10 " src={location} alt="location" />
-          <p className="font-bold text-lg no-underline tracking-normal leading-none">
-            Nijmegen
-          </p>
-        </div>
-        <div className="flex items-center pb-4">
-          <img className="h-10 " src={gamingcontroller} alt="" />
-          <p className="font-bold text-lg no-underline tracking-normal leading-none">
-            React Developer
-          </p>
-        </div>
+      
         <div className="flex justify-center items-center pt-4">
           <p className="font-bold text-md text-[#0177b7] no-underline tracking-normal leading-none">
             Events
@@ -58,7 +41,7 @@ const LeftSide = () => {
             Follow
           </p>
           <p className="font-bold text-md text-[#0177b7] no-underline tracking-normal leading-none mx-2">
-            more
+            More
           </p>
         </div>
       </div>

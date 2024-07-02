@@ -21,7 +21,7 @@ const Main = () => {
     const postRef = doc(collection(db, "posts"));
     const document = postRef.id;
     const [ state, dispatch ] = useReducer(PostsReducer, postsStates);
-    const { SUBMIT_POST, HANDLE_ERROR }= postActions;
+    const { SUBMIT_POST, HANDLE_ERROR } = postActions;
     const [ progressBar, setProgressBar ] = useState(0);
     
     const handleUpload = (e) => {
@@ -29,6 +29,7 @@ const Main = () => {
     };
 
     const handleSubmitPost = async (e) =>{
+      e.preventDefault();
         if(text.current.value !== ""){
           try{     
             await setDoc(postRef,{
@@ -66,17 +67,21 @@ const Main = () => {
       };
 
       const submitImage = async () => {
-        const fileType = metadata.contentType.includes[file["type"]];
-        console.log("file", file);
-        if (!file) return;
-        if(fileType) {
-        try{
-          const storageRef = ref(storage, "image/$(file.name)");
-          const uploadTask = uploadBytesResumable(storageRef, file, metadata.contentType);
-          await uploadTask.on('state_changed', (snapshot) => {
-            const progress = Math.round(  
-              (snapshot.bytesTransferred / snapshot.totalBytes) 
-              * 100
+      const fileType = metadata.contentType.includes(file["type"]);
+      if (!file) return;
+      if (fileType) {
+        try {
+          const storageRef = ref(storage, `images/${file.name}`);
+          const uploadTask = uploadBytesResumable(
+            storageRef,
+            file,
+            metadata.contentType
+          );
+        await uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
             setProgressBar(progress);
           },
@@ -90,14 +95,14 @@ const Main = () => {
               }
             );
           }
-          );
-        } catch(err){
-          dispatch({ type: HANDLE_ERROR});
-          alert(err.message);
-          console.log(err.message);
-          }
-        }
-      };
+        );
+      } catch (err) {
+        dispatch({ type: HANDLE_ERROR });
+        alert(err.message);
+        console.log(err.message);
+      }
+    }
+  };
 
       useEffect(() => {
         const postData = async () => {
@@ -105,7 +110,7 @@ const Main = () => {
           await onSnapshot(q,(doc) => {
             dispatch({ 
               type: SUBMIT_POST, 
-              posts: doc.docs.map((item) => item.data()),
+              posts: doc?.docs?.map((item) => item?.data()),
             });
             setImage(null);
             setFile(null);

@@ -19,7 +19,11 @@ const LeftSide = () => {
         <img className="h-28 w-full rounded-r" src={game1} alt="game" />
         <div className="absolute -bottom-4 ">
           <Tooltip content="Profile" placement="top">
-            <Avatar src={avatar} size="xs" alt="Avatar"></Avatar>
+            <Avatar
+              src={user?.photoURL || avatar}
+              size="xs"
+              alt="Avatar"
+            ></Avatar>
           </Tooltip>
         </div>
       </div>
@@ -29,7 +33,6 @@ const LeftSide = () => {
         </p>
       </div>
       <div className="flex flex-col items-center pl-2">
-      
         <div className="flex justify-center items-center pt-4">
           <p className="font-bold text-md text-[#0177b7] no-underline tracking-normal leading-none">
             Events

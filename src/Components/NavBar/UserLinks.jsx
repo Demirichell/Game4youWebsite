@@ -1,13 +1,11 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { Tooltip } from "@material-tailwind/react";
 import { Avatar } from "@material-tailwind/react";
 import avatar from "../../assets/Images/avatar.png";
 import { AuthContext } from "../AppContext/AppContext";
 
-
 const UserLinks = () => {
-
-  const {signOutUser, user, userData } = useContext(AuthContext);
+  const { signOutUser, user, userData } = useContext(AuthContext);
 
   return (
     <div className="flex justify-center items-center cursor-pointer">
@@ -61,12 +59,16 @@ const UserLinks = () => {
       </div>
       <div className="mx-4 flex items-center" onClick={signOutUser}>
         <Tooltip content="Sign Out" placement="bottom">
-          <Avatar src={avatar} size="xs" alt="Avatar"></Avatar>
+          <Avatar
+            src={user?.photoURL || avatar}
+            size="xs"
+            alt="Avatar"
+          ></Avatar>
         </Tooltip>
         <p className="ml-4 text-sm text-black font-medium no-underline">
-          {user?.displayName === null && userData?.name !== undefined 
-            ? userData?.name?.charAt(0)?.toUpperCase() + 
-            userData?.name?.slice(1) 
+          {user?.displayName === null && userData?.name !== undefined
+            ? userData?.name?.charAt(0)?.toUpperCase() +
+              userData?.name?.slice(1)
             : user?.displayName?.split(" ")[0]}
         </p>
       </div>

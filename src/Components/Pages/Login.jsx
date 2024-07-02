@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
     Card,
     CardHeader,
@@ -8,14 +8,29 @@ import {
     Input,
     Button,
   } from "@material-tailwind/react";
-  import { Link } from "react-router-dom";
-  import {useFormik} from "formik";
-  import * as Yup from "yup";
-  import FadeLoader from "react-spinners/FadeLoader";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import FadeLoader from "react-spinners/FadeLoader";
+import { AuthContext} from "../AppContext/AppContext";
+import { auth, onAuthStateChanged} from "../firebase/firebase";
 
 const Login = () => {
-
     const[loading, setLoading] = useState(false);
+    const {signInWithGoogle, loginWithEmailAndPassword } = useContext(AuthContext);
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+      setLoading(true);
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          navigate("/");
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
+      });
+    }, [navigate]);
 
     let initialValues = {
         email: "",
@@ -37,9 +52,10 @@ const Login = () => {
         e.preventDefault();
         const {email,password } = formik.values;
         if(formik.isValid === true){
-            alert("valid");
+            loginWithEmailAndPassword(email, password);
             setLoading(true);
         } else {
+            setLoading(false);
             alert("Invalid input");
         }
         console.log("formik", formik);
@@ -83,7 +99,7 @@ const Login = () => {
                 Sign in
                 </Button>
             </form>              
-          <Button variant="gradient" color="blue" fullWidth >
+          <Button variant="gradient" color="blue" fullWidth onClick={signInWithGoogle}>
             Sign in with Google
           </Button>
           </CardBody>

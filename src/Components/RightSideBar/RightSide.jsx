@@ -1,36 +1,101 @@
-import { useState } from "react";
-import game1 from "../../assets/Images/game1.png";
+import React, { useState, useContext } from "react";
+
+import { AuthContext } from "../AppContext/AppContext";
+import { Link } from "react-router-dom";
+import { Avatar } from "@material-tailwind/react";
+import avatar from "../../assets/Images/avatar.png";
+import delet from "../../assets/Images/delete.png";
+import {
+  collection,
+  doc,
+  query,
+  where,
+  getDocs,
+  arrayRemove,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../firebase/firebase";
 
 const RightSide = () => {
   const [input, setInput] = useState("");
+  const { user, userData } = useContext(AuthContext);
+  const friendList = userData?.friends;
+
+  const searchFriends = (data) => {
+    return data.filter((item) =>
+      item["name"].toLowerCase().includes(input.toLowerCase())
+    );
+  };
+
+  const removeFriend = async (id, name, image) => {
+    const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+    const getDoc = await getDocs(q);
+    const userDocumentId = getDoc.docs[0].id;
+
+    await updateDoc(doc(db, "users", userDocumentId), {
+      friends: arrayRemove({ id: id, name: name, image: image }),
+    });
+  };
 
   return (
-    <div className="flex flex-col h-screen bg-white shadow-lg border-2 rounded-l r-xl">
-      <div className="flex flex-col items-center relative pt-10">
-        <img className="h-48 rounded-md" src={game1} alt="" />
-      </div>
-      <p className="font-normal text-sm text-gray-700 max-w-fit no-underline tracking-normal leading-tight py-2 mx-2">
-        I love Stardew Valley because it offers a perfect blend of farming,
-        adventure, and community. The games charming pixel art and relaxing
-        music create a soothing atmosphere. The freedom to design my farm,
-        develop relationships with villagers, and explore the mines keeps me
-        engaged. Its simple yet deep mechanics make every day in the game
-        fulfilling and enjoyable.
-      </p>
+    <div className="flex flex-col h-screen bg-white shadow-lg border-2 rounded-l-xl">
+      <div className="flex flex-col items-center relative pt-10"></div>
+
       <div className="mx-2 mt-10">
-        <p className="font-medium text-sm text-gray-700  no-underline tracking-normal leading-none">
-          Friends:
+        <p className="font-roboto font-medium text-sm text-gray-700 no-underline tracking-normal leading-none">
+          Friends:{" "}
         </p>
         <input
           className="border-0 outline-none mt-4"
           name="input"
           value={input}
-          placeholder="Search Gamers"
           type="text"
+          placeholder="Search friends"
           onChange={(e) => setInput(e.target.value)}
-        />
+        ></input>
+        {friendList?.length > 0 ? (
+          searchFriends(friendList)?.map((friend) => {
+            return (
+              <div
+                className="flex items-center justify-between hover:bg-gray-100 duration-300 ease-in-out"
+                key={friend.id}
+              >
+                <Link to={`/profile/${friend.id}`}>
+                  <div className="flex items-center my-2 cursor-pointer">
+                    <div className="flex items-center">
+                      <Avatar
+                        size="sm"
+                        variant="circular"
+                        src={friend?.image || avatar}
+                        alt="avatar"
+                      ></Avatar>
+                      <p className="ml-4 font-roboto font-medium text-sm text-gray-700 no-underline tracking-normal leading-none">
+                        {friend.name}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+                <div className="mr-4">
+                  <img
+                    onClick={() =>
+                      removeFriend(friend.id, friend.name, friend.image)
+                    }
+                    className="cursor-pointer"
+                    src={delet}
+                    alt="deleteFriend"
+                  ></img>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <p className="mt-10 font-roboto font-medium text-sm text-gray-700 no-underline tracking-normal leading-none">
+            Add friends to check their profile
+          </p>
+        )}
       </div>
     </div>
   );
 };
+
 export default RightSide;

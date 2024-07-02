@@ -171,7 +171,7 @@ const Main = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col py-4 w-full">{/*posts */}</div>
+      <div className="flex flex-col py-4 w-full">{/*posts*/}</div>
     </div>
   );
 };

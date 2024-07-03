@@ -38,11 +38,11 @@ const RightSide = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-white shadow-lg border-2 rounded-l-xl">
+    <div className="flex flex-col h-screen bg-white  shadow-lg border-2 rounded-l-xl">
       <div className="flex flex-col items-center relative pt-10"></div>
 
       <div className="mx-2 mt-10">
-        <p className="font-roboto font-medium text-sm text-gray-700 no-underline tracking-normal leading-none">
+        <p className="font-roboto font-medium text-sm text-black no-underline tracking-normal leading-none">
           Friends:{" "}
         </p>
         <input
@@ -89,7 +89,7 @@ const RightSide = () => {
             );
           })
         ) : (
-          <p className="mt-10 font-roboto font-medium text-sm text-gray-700 no-underline tracking-normal leading-none">
+          <p className="mt-10 font-roboto font-medium text-sm text-black  no-underline tracking-normal leading-none">
             Add friends to check their profile
           </p>
         )}

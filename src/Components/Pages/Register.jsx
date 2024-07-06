@@ -15,7 +15,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 import { AuthContext } from "../AppContext/AppContext";
 import { auth, onAuthStateChanged} from "../firebase/firebase";
 
-const Register = () => {
+    const Register = () => {
     const[loading, setLoading] = useState(false);
     const { registerWithEmailAndPassword } = useContext(AuthContext);
     const navigate = useNavigate();

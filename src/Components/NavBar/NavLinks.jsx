@@ -1,6 +1,6 @@
 const NavLinks = () => {
   return (
-    <div className="flex justify-center items-center cursor-pointer">
+    <div data-cy="nav-links" className="flex justify-center items-center cursor-pointer">
       <div className="hover:translate-y-1 duration-500 ease-in-out hover:text-blue-500">
         <svg
           xmlns="http://www.w3.org/2000/svg"

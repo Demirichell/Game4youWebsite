@@ -151,6 +151,7 @@ const Main = () => {
             <div className="flex justify-between items-center">
               <div className="w-full ml-4 ">
                 <input
+                  data-cy="write-post"
                   type="text"
                   name="text"
                   placeholder={"What's on your mind?"}
@@ -165,7 +166,7 @@ const Main = () => {
                 )}
               </div>
               <div className="mr-4">
-                <Button variant="text" type="submit">
+                <Button data-cy="submit-post" variant="text" type="submit">
                   Share
                 </Button>
               </div>
@@ -179,6 +180,7 @@ const Main = () => {
         <div className="flex justify-around items-center pt-4">
           <div className="flex items-center">
             <label
+              data-cy="attach-image"
               htmlFor="addimg"
               className=" cursor-pointer flex items-center"
             >
@@ -191,7 +193,7 @@ const Main = () => {
               />
             </label>
             {file && (
-              <Button variant="text" onClick={submitImage}>
+              <Button data-cy="upload-image" variant="text" onClick={submitImage}>
                 Upload
               </Button>
             )}

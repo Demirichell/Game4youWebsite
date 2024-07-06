@@ -93,7 +93,7 @@ const PostCard = ({ uid, id, logo, name, email, text, image, timestamp }) => {
 
 
   return (
-    <div className="mb-4">
+    <div data-cy="post-card" className="mb-4">
       <div className="flex flex-col py-4 bg-white rounded-t-3xl">
         <div className="flex items-center pb-4 ml-2">
           <Avatar
@@ -121,13 +121,13 @@ const PostCard = ({ uid, id, logo, name, email, text, image, timestamp }) => {
           </p>
         </div>
         {image && (
-          <img className="h-[500px] w-full" src={image} alt="post"></img>
+          <img data-cy="post-image" className="h-[500px] w-full" src={image} alt="post"></img>
         )}
       </div>
       <div className="flex justify-around items-start pt-4">
-        <button className="flex items-center cursor-pointer rounded-lg p-2 hover:bg-gray-100" onClick={handleLike}>
+        <button data-cy="like-button" className="flex items-center cursor-pointer rounded-lg p-2 hover:bg-gray-100" onClick={handleLike}>
           <img className="h-8 mr-4" src={hearticon} alt="like" />
-          {state.likes?.length > 0 && state?.likes?.length}
+          <p data-cy="likes-amount">{state.likes?.length > 0 && state?.likes?.length}</p>
         </button>
         <div className="flex items-center cursor-pointer rounded-lg p-2 hover:bg-gray-100">
           <div className="flex items-center cursor-pointer">
